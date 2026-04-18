@@ -16,19 +16,13 @@ public class Main {
 		db.createTable();
 		
 		 //create new Signal object, instance of Signal class
-//		Signal signal1 = new Signal("Radar", 75, "ACTIVE");
-		
-//		ArrayList<Signal> signalList = new ArrayList<Signal>();
-
-//		//Add signals to signalList(ArrayList)
-//		signalList.add(signal1);
-
-		
+//		Signal signal = new Signal("Radar", 75, "ACTIVE");
+		//insert new signal into DB
+		//db.insertSignal(signal5);	
 		//create instance of SignalService
+		
 		SignalService service = new SignalService();		
 		
-		Signal signal5 = new Signal("COMM", 91, "ACTIVE");
-		db.insertSignal(signal5);
 
 		//select all from dbSignals
 		ArrayList<Signal> dbSignals = db.getAllSignals();

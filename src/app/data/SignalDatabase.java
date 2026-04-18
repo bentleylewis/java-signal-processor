@@ -95,5 +95,44 @@ public class SignalDatabase {
 		return signalList;
 	}
 	
+	public boolean updateSignalStatus(int id, String status) {
+		var sql = "UPDATE signals SET status = ? WHERE id = ?";
+		
+		try(var conn = connect();
+				
+			var pstmt = conn.prepareStatement(sql)) {
+				pstmt.setString(1, status);
+				pstmt.setInt(2, id);
+				
+				pstmt.executeUpdate();
+				
+				int rowsUpdated = pstmt.executeUpdate();
+				
+				
+				return rowsUpdated > 0;
+				
+		} catch(SQLException e) {
+			System.err.println(e.getMessage());
+			return false;
+		}
+		
+	}
+	
+	public boolean deleteSignal(int id) {
+		var sql = "DELETE FROM signals WHERE id = ?";
+		
+		try(var conn = connect(); 
+			var pstmt = conn.prepareStatement(sql)) {
+			
+			pstmt.setInt(1, id);
+			int rowsUpdated = pstmt.executeUpdate();
+			return rowsUpdated > 0;
+			
+		} catch(SQLException e) {
+			System.err.println(e.getMessage());
+			return false;
+		}
+	}
+	
 }
  
