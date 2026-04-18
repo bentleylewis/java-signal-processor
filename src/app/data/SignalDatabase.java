@@ -1,5 +1,6 @@
 package app.data;
 
+import java.util.ArrayList;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -44,6 +45,8 @@ public class SignalDatabase {
 		}
 	}
 	
+	
+	//insert signal object into signalDB
 	public void insertSignal(Signal signal) {
 		var sql = "INSERT INTO signals(type, strength, status) VALUES(?, ?, ?)";
 		
@@ -64,6 +67,32 @@ public class SignalDatabase {
 		}
 		
 		                                             
+	}
+	
+	public ArrayList<Signal> getAllSignals() {
+		
+		var sql = "SELECT * FROM signals";
+		ArrayList<Signal> signalList = new ArrayList<>();
+		
+		try(var conn = connect();
+				var stmt = conn.createStatement()) {
+				
+			//return ResultSet object 
+				var rs = stmt.executeQuery(sql);
+				
+				while(rs.next()) {
+					String type = rs.getString("type");
+					int strength = rs.getInt("strength");
+					String status = rs.getString("status");
+					int id = rs.getInt("id");
+					
+					Signal signal = new Signal(id, type, strength, status);
+					signalList.add(signal);
+					}
+		} catch(SQLException e) {
+			System.err.println(e.getMessage());
+		}
+		return signalList;
 	}
 	
 }
